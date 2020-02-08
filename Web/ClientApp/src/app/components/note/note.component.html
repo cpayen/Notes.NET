@@ -1,0 +1,7 @@
+<article *ngIf="note">
+  <p>{{ note.title }}</p>
+  <p>{{ note.author }}</p>
+  <p>{{ note.createdAt }}</p>
+  <p>{{ note.description }}</p>
+  <div [innerHTML]="note.htmlContent"></div>
+</article>

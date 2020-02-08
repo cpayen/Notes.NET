@@ -1,0 +1,17 @@
+<div class="container">
+
+  <div class="left">
+    <nav *ngIf="books">
+      <ul>
+        <li *ngFor="let book of books">
+          <a [routerLink]="['/content', book.slug]">{{ book.title }}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

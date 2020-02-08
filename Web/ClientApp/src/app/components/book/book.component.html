@@ -1,0 +1,14 @@
+<article *ngIf="book">
+  <p>{{ book.title }}</p>
+  <p>{{ book.author }}</p>
+  <p>{{ book.createdAt }}</p>
+  <p>{{ book.description }}</p>
+</article>
+
+<nav *ngIf="book && book.notes">
+  <ul>
+    <li *ngFor="let note of book.notes">
+      <a [routerLink]="['/content', book.slug, note.slug]">{{ note.title }}</a>
+    </li>
+  </ul> 
+</nav>
