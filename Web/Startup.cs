@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Web.Middlewares;
 
 namespace Web
 {
@@ -61,6 +62,8 @@ namespace Web
             }
 
             app.UseRouting();
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseEndpoints(endpoints =>
             {

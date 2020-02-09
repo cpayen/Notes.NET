@@ -1,4 +1,5 @@
 ﻿using Core.Data;
+using Core.Exceptions;
 using Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,12 +21,20 @@ namespace Core.Services
 
         public async Task<Book> GetBookAsync(string slug)
         {
-            return await _uow.ReadContentRepository.GetBookAsync(slug).ConfigureAwait(false);
+            var book = 
+                await _uow.ReadContentRepository.GetBookAsync(slug).ConfigureAwait(false) ?? 
+                throw new NotFoundException(nameof(Book), slug);
+
+            return book;
         }
 
         public async Task<Note> GetNoteAsync(string bookSlug, string noteSlug)
         {
-            return await _uow.ReadContentRepository.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false);
+            var note = 
+                await _uow.ReadContentRepository.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false) ?? 
+                throw new NotFoundException(nameof(Note), noteSlug);
+
+            return note;
         }
     }
 }

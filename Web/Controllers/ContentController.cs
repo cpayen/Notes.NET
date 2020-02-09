@@ -21,24 +21,26 @@ namespace Web.Controllers
 
         [HttpGet]
         [Route("books")]
-        public async Task<IEnumerable<Book>> BooksAsync()
+        public async Task<ActionResult<IEnumerable<Book>>> BooksAsync()
         {
-            return await _readContents.GetBooksAsync().ConfigureAwait(false);
+            var books = await _readContents.GetBooksAsync().ConfigureAwait(false);
+            return Ok(books);
         }
 
         [HttpGet]
         [Route("{bookSlug}")]
-        public async Task<Book> BookAsync(string bookSlug)
+        public async Task<ActionResult<Book>> BookAsync(string bookSlug)
         {
-            return await _readContents.GetBookAsync(bookSlug).ConfigureAwait(false);
+            var book = await _readContents.GetBookAsync(bookSlug).ConfigureAwait(false);
+            return Ok(book);
         }
 
         [HttpGet]
         [Route("{bookSlug}/{noteSlug}")]
-        public async Task<NoteDTO> NoteAsync(string bookSlug, string noteSlug)
+        public async Task<ActionResult<NoteDTO>> NoteAsync(string bookSlug, string noteSlug)
         {
             var note = await _readContents.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false);
-            return new NoteDTO
+            return Ok(new NoteDTO
             {
                 Author = note.Author,
                 CreatedAt = note.CreatedAt,
@@ -47,7 +49,7 @@ namespace Web.Controllers
                 Slug = note.Slug,
                 Description = note.Description,
                 HtmlContent = Markdown.ToHtml(note.Content)
-            };
+            });
         }
     }
 }
