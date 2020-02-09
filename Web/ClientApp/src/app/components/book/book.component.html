@@ -1,4 +1,7 @@
-<app-breadcrumb [book]="book"></app-breadcrumb>
+<app-notfound *ngIf="notFound"></app-notfound>
+<app-error *ngIf="error"></app-error>
+
+<app-breadcrumb *ngIf="book" [book]="book"></app-breadcrumb>
 
 <article *ngIf="book">
   <p>{{ book.title }}</p>
@@ -12,5 +15,6 @@
     <li *ngFor="let note of book.notes">
       <a [routerLink]="['/content', book.slug, note.slug]">{{ note.title }}</a>
     </li>
+    <li><a [routerLink]="['/content', book.slug, 'oops']">Oops not found</a></li>
   </ul> 
 </nav>

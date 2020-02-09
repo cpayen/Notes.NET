@@ -37,6 +37,12 @@ namespace Data.FileSystem.Repositories
         {
             var bookPath = Path.Combine(_settings.Path, slug);
             var bookJson = await FileHelper.ReadAllTextAsync(Path.Combine(bookPath, "data.json")).ConfigureAwait(false);
+
+            if(bookJson == null)
+            {
+                return null;
+            }
+
             var book = JsonConvert.DeserializeObject<Book>(bookJson);
 
             var notes = new List<Note>();
@@ -59,11 +65,15 @@ namespace Data.FileSystem.Repositories
         {
             var notePath = Path.Combine(_settings.Path, bookSlug, noteSlug);
             var noteJson = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "data.json")).ConfigureAwait(false);
-            var noteMarkdown = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "content.md")).ConfigureAwait(false);
+
+            if (noteJson == null)
+            {
+                return null;
+            }
 
             var note = JsonConvert.DeserializeObject<Note>(noteJson);
             note.Slug = noteSlug;
-            note.Content = noteMarkdown;
+            note.Content = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "content.md")).ConfigureAwait(false);
 
             return note;
         }

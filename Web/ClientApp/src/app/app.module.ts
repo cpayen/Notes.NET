@@ -10,6 +10,8 @@ import { ContentComponent } from './components/content/content.component';
 import { BookComponent } from './components/book/book.component';
 import { NoteComponent } from './components/note/note.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     ContentComponent,
     BookComponent,
     NoteComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    NotfoundComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

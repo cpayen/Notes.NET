@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription, PartialObserver } from 'rxjs';
 import { ContentService } from '../../services/content.service';
 import { Book } from '../../models/book';
-import { Subscription, PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'app-book',
@@ -10,7 +10,12 @@ import { Subscription, PartialObserver } from 'rxjs';
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit, OnDestroy {
+  // Data
   book: Book;
+  // State
+  loading: boolean;
+  notFound: boolean;
+  error: boolean;
 
   private subscription: Subscription;
   private paramMapObserver: PartialObserver<ParamMap> = {
@@ -31,7 +36,26 @@ export class BookComponent implements OnInit, OnDestroy {
   }
 
   loadBook(bookSlug: string) {
-    this.contentService.GetBook(bookSlug).subscribe(o => this.book = o, o => console.error(o));
+    this.book = null;
+    this.loading = true;
+    this.notFound = false;
+    this.error = false;
+
+    this.contentService.GetBook(bookSlug).subscribe(o => this.handleSuccess(o), o => this.handleError(o));
+  }
+
+  handleSuccess(book: Book) {
+    this.book = book;
+    this.loading = false;
+  }
+
+  handleError(error: any) {
+    console.error(error);
+    this.loading = false;
+    switch (error.status) {
+      case 404: this.notFound = true; break;
+      default: this.error = true; break;
+    }
   }
 
 }

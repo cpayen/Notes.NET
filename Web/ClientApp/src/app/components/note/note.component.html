@@ -1,4 +1,7 @@
-<app-breadcrumb [book]="book" [note]="note"></app-breadcrumb>
+<app-notfound *ngIf="notFound"></app-notfound>
+<app-error *ngIf="error"></app-error>
+
+<app-breadcrumb *ngIf="book && note" [book]="book" [note]="note"></app-breadcrumb>
 
 <article *ngIf="note">
   <p>{{ note.title }}</p>

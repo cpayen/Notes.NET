@@ -6,6 +6,7 @@
         <li *ngFor="let book of books">
           <a [routerLink]="['/content', book.slug]">{{ book.title }}</a>
         </li>
+        <li><a [routerLink]="['/content', 'oops']">Oops not found</a></li>
       </ul>
     </nav>
   </div>
