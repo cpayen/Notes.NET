@@ -40,6 +40,8 @@ namespace Web.Controllers
         public async Task<ActionResult<NoteDTO>> NoteAsync(string bookSlug, string noteSlug)
         {
             var note = await _readContents.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false);
+            var htmlContent = Markdown.ToHtml(note.Content.Replace("{{path:image}}", $"/api/images/{bookSlug}/{noteSlug}/", System.StringComparison.Ordinal)); // Utils?
+
             return Ok(new NoteDTO
             {
                 Author = note.Author,
@@ -48,7 +50,7 @@ namespace Web.Controllers
                 Title = note.Title,
                 Slug = note.Slug,
                 Description = note.Description,
-                HtmlContent = Markdown.ToHtml(note.Content)
+                HtmlContent = htmlContent
             });
         }
     }

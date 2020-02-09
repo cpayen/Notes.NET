@@ -67,5 +67,11 @@ namespace Data.FileSystem.Repositories
 
             return note;
         }
+
+        public async Task<byte[]> GetMediaContentAsync(string bookSlug, string noteSlug, string mediaName)
+        {
+            var fileContent = await FileHelper.GetFileStreamAsync(Path.Combine(_settings.Path, bookSlug, noteSlug, mediaName)).ConfigureAwait(false);
+            return fileContent;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Data.FileSystem.Helpers
@@ -12,6 +13,19 @@ namespace Data.FileSystem.Helpers
             {
                 return await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
+        }
+
+        public static async Task<byte[]> GetFileStreamAsync(string filePath)
+        {
+            byte[] result;
+
+            using (var fileStream = File.OpenRead(filePath))
+            {
+                result = new byte[fileStream.Length];
+                await fileStream.ReadAsync(result, 0, (int)fileStream.Length).ConfigureAwait(false);
+            }
+
+            return result;
         }
     }
 }

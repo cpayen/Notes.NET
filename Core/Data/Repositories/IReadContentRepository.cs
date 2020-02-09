@@ -9,5 +9,6 @@ namespace Core.Data.Repositories
         Task<ICollection<Book>> GetAllBooksAsync();
         Task<Book> GetBookAsync(string slug);
         Task<Note> GetNoteAsync(string bookSlug, string noteSlug);
+        Task<byte[]> GetMediaContentAsync(string bookSlug, string noteSlug, string mediaName);
     }
 }

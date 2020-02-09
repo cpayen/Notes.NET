@@ -36,5 +36,13 @@ namespace Core.Services
 
             return note;
         }
+
+        public async Task<byte[]> GetMediaContentAsync(string bookSlug, string noteSlug, string mediaName)
+        {
+            var media = await _uow.ReadContentRepository.GetMediaContentAsync(bookSlug, noteSlug, mediaName).ConfigureAwait(false) ??
+                throw new NotFoundException("Media", mediaName);
+
+            return media;
+        }
     }
 }
