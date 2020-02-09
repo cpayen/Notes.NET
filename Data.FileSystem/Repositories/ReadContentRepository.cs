@@ -1,4 +1,5 @@
 ﻿using Core.Data.Repositories;
+using Core.Exceptions;
 using Core.Models;
 using Data.FileSystem.Helpers;
 using Newtonsoft.Json;
@@ -24,7 +25,7 @@ namespace Data.FileSystem.Repositories
             var dirs = Directory.GetDirectories(_settings.Path);
             foreach (var dir in dirs)
             {
-                var json = await FileHelper.ReadAllTextAsync(Path.Combine(dir, "data.json")); // TODO: check errors
+                var json = await FileHelper.ReadAllTextAsync(Path.Combine(dir, "data.json")).ConfigureAwait(false); 
                 var book = JsonConvert.DeserializeObject<Book>(json);
                 book.Slug = dir.Split(Path.DirectorySeparatorChar).Last();
                 books.Add(book);
@@ -36,7 +37,7 @@ namespace Data.FileSystem.Repositories
         public async Task<Book> GetBookAsync(string slug)
         {
             var bookPath = Path.Combine(_settings.Path, slug);
-            var bookJson = await FileHelper.ReadAllTextAsync(Path.Combine(bookPath, "data.json"));
+            var bookJson = await FileHelper.ReadAllTextAsync(Path.Combine(bookPath, "data.json")).ConfigureAwait(false);
             var book = JsonConvert.DeserializeObject<Book>(bookJson);
 
             var notes = new List<Note>();
@@ -46,7 +47,7 @@ namespace Data.FileSystem.Repositories
             var pageDirs = Directory.GetDirectories(bookPath);
             foreach (var pageDir in pageDirs)
             {
-                var noteJson = await FileHelper.ReadAllTextAsync(Path.Combine(pageDir, "data.json"));
+                var noteJson = await FileHelper.ReadAllTextAsync(Path.Combine(pageDir, "data.json")).ConfigureAwait(false);
                 var note = JsonConvert.DeserializeObject<Note>(noteJson);
                 note.Slug = pageDir.Split(Path.DirectorySeparatorChar).Last();
                 notes.Add(note);
@@ -58,8 +59,8 @@ namespace Data.FileSystem.Repositories
         public async Task<Note> GetNoteAsync(string bookSlug, string noteSlug)
         {
             var notePath = Path.Combine(_settings.Path, bookSlug, noteSlug);
-            var noteJson = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "data.json"));
-            var noteMarkdown = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "content.md"));
+            var noteJson = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "data.json")).ConfigureAwait(false);
+            var noteMarkdown = await FileHelper.ReadAllTextAsync(Path.Combine(notePath, "content.md")).ConfigureAwait(false);
 
             var note = JsonConvert.DeserializeObject<Note>(noteJson);
             note.Slug = noteSlug;

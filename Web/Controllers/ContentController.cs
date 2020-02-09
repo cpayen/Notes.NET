@@ -26,21 +26,21 @@ namespace Web.Controllers
         [Route("books")]
         public async Task<IEnumerable<Book>> BooksAsync()
         {
-            return await _readContents.GetBooksAsync();
+            return await _readContents.GetBooksAsync().ConfigureAwait(false);
         }
 
         [HttpGet]
         [Route("{bookSlug}")]
         public async Task<Book> BookAsync(string bookSlug)
         {
-            return await _readContents.GetBookAsync(bookSlug);
+            return await _readContents.GetBookAsync(bookSlug).ConfigureAwait(false);
         }
 
         [HttpGet]
         [Route("{bookSlug}/{noteSlug}")]
         public async Task<NoteDTO> NoteAsync(string bookSlug, string noteSlug)
         {
-            var note = await _readContents.GetNoteAsync(bookSlug, noteSlug);
+            var note = await _readContents.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false);
             return new NoteDTO
             {
                 Author = note.Author,

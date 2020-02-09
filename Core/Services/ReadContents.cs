@@ -15,17 +15,17 @@ namespace Core.Services
 
         public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            return await _uow.ReadContentRepository.GetAllBooksAsync();
+            return await _uow.ReadContentRepository.GetAllBooksAsync().ConfigureAwait(false);
         }
 
         public async Task<Book> GetBookAsync(string slug)
         {
-            return await _uow.ReadContentRepository.GetBookAsync(slug);
+            return await _uow.ReadContentRepository.GetBookAsync(slug).ConfigureAwait(false);
         }
 
         public async Task<Note> GetNoteAsync(string bookSlug, string noteSlug)
         {
-            return await _uow.ReadContentRepository.GetNoteAsync(bookSlug, noteSlug);
+            return await _uow.ReadContentRepository.GetNoteAsync(bookSlug, noteSlug).ConfigureAwait(false);
         }
     }
 }

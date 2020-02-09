@@ -10,7 +10,7 @@ namespace Data.FileSystem.Helpers
             using (var fileStream = File.OpenRead(filePath))
             using (var streamReader = new StreamReader(fileStream))
             {
-                return await streamReader.ReadToEndAsync();
+                return await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
         }
     }

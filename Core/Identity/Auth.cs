@@ -6,7 +6,7 @@
 
         public const string AnonymousUserLogin = "Anonymous";
 
-        protected readonly ICurrentUser _currentUser;
+        private readonly ICurrentUser _currentUser;
 
         #endregion
 
