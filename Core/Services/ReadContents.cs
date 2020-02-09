@@ -39,6 +39,8 @@ namespace Core.Services
 
         public async Task<byte[]> GetMediaContentAsync(string bookSlug, string noteSlug, string mediaName)
         {
+            //TODO: Check slugs and image name
+
             var media = await _uow.ReadContentRepository.GetMediaContentAsync(bookSlug, noteSlug, mediaName).ConfigureAwait(false) ??
                 throw new NotFoundException("Media", mediaName);
 

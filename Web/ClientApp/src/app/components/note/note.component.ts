@@ -3,6 +3,7 @@ import { Note } from 'src/app/models/note';
 import { Subscription, PartialObserver } from 'rxjs';
 import { ContentService } from '../../services/content.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Book } from 'src/app/models/book';
 
 @Component({
   selector: 'app-note',
@@ -10,6 +11,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./note.component.scss']
 })
 export class NoteComponent implements OnInit, OnDestroy {
+  book: Book;
   note: Note;
 
   private subscription: Subscription;
@@ -31,6 +33,7 @@ export class NoteComponent implements OnInit, OnDestroy {
   }
 
   loadNote(bookSlug: string, noteSlug: string) {
+    this.contentService.GetBook(bookSlug).subscribe(o => this.book = o, o => console.error(o));
     this.contentService.GetNote(bookSlug, noteSlug).subscribe(o => this.note = o, o => console.error(o));
   }
 

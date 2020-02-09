@@ -1,0 +1,23 @@
+<div class="breadcrumb">
+  <ng-container *ngIf="book && !note">
+    <ul>
+      <li><a [routerLink]="['/']">Home</a></li>
+      <li><a [routerLink]="['/content']">Content</a></li>
+      <li><span>{{ book.title }}</span></li>
+    </ul>
+  </ng-container>
+  <ng-container *ngIf="book && note">
+    <ul>
+      <li><a [routerLink]="['/']">Home</a></li>
+      <li><a [routerLink]="['/content']">Content</a></li>
+      <li><a [routerLink]="['/content', book.slug]">{{ book.title }}</a></li>
+      <li><span>{{ note.title }}</span></li>
+    </ul>
+  </ng-container>
+  <ng-container *ngIf="!book && !note && page">
+    <ul>
+      <li><a [routerLink]="['/']">Home</a></li>
+      <li><span>{{ page }}</span></li>
+    </ul>
+  </ng-container>
+</div>
