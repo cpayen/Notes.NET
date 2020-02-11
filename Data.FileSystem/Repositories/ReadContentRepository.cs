@@ -80,7 +80,7 @@ namespace Data.FileSystem.Repositories
 
         public async Task<byte[]> GetMediaContentAsync(string bookSlug, string noteSlug, string mediaName)
         {
-            var fileContent = await FileHelper.GetFileStreamAsync(Path.Combine(_settings.Path, bookSlug, noteSlug, mediaName)).ConfigureAwait(false);
+            var fileContent = await FileHelper.GetFileBytesAsync(Path.Combine(_settings.Path, bookSlug, noteSlug, mediaName)).ConfigureAwait(false);
             return fileContent;
         }
     }

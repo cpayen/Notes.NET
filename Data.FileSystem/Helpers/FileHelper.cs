@@ -19,7 +19,7 @@ namespace Data.FileSystem.Helpers
             }
         }
 
-        public static async Task<byte[]> GetFileStreamAsync(string filePath)
+        public static async Task<byte[]> GetFileBytesAsync(string filePath)
         {
             if (!File.Exists(filePath))
             {
